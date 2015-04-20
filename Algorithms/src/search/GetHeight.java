@@ -25,11 +25,11 @@ public class GetHeight<Key extends Comparable<Key>, Value> extends BST {
         }
     }
 
-    public int getHeight() {
+    public int height() {
 //        return root.height;
-        return getHeight(root);
+        return height(root);
     }
-    public int getHeight(Node x) {
+    public int height(Node x) {
         if (x == null)
             return 0;
         else            //else要不要
@@ -57,8 +57,8 @@ public class GetHeight<Key extends Comparable<Key>, Value> extends BST {
             x.value = value;    //更新值
         }
         x.N = size(x.left) + size(x.right) + 1;
-        int leftHeight = getHeight(x.left);
-        int rightHeight = getHeight(x.right);
+        int leftHeight = height(x.left);
+        int rightHeight = height(x.right);
         x.height = (leftHeight>=rightHeight?leftHeight:rightHeight)+1;
         return x;
     }
@@ -99,7 +99,7 @@ public class GetHeight<Key extends Comparable<Key>, Value> extends BST {
         System.out.println(tree.get(5));
         tree.put(7, 49);
         tree.print();
-        System.out.println("height="+tree.getHeight());
+        System.out.println("height="+tree.height());
 
 
 
