@@ -4,49 +4,37 @@ package search;
  * project_name:Algorithms
  * package_name:search
  * user: youzipi
- * date: 2015/4/17
+ * date: 2015/4/20
  */
-
-
-public class BST<Key extends Comparable<Key>, Value> {
+public class GetHeight<Key extends Comparable<Key>, Value> extends BST {
 
     private Node root;
 
     private class Node {
-        private Key key;        //key为排序依据
-        private Value value;
-        private Node left, right;
-        private int N;//以该节点为根的树的节点总数（含该节点）
-        private int height;
+        protected Key key;        //key为排序依据
+        protected Value value;
+        protected Node left, right;
+        protected int N;//以该节点为根的树的节点总数（含该节点）
+        protected int height;
 
-        public Node(Key key, Value value, int n) {
+        public Node(Key key, Value value, int n,int height) {
             this.key = key;
             this.value = value;
-            N = n;
+            this.N = n;
+            this.height = height;
         }
     }
 
-    public Value get(Key key) {
-        return get(root,key);
+    public int getHeight() {
+//        return root.height;
+        return getHeight(root);
     }
-
-    private Value get(Node x,Key key) {
-        Value value = null;
-        if(x == null){
-            return null;
-        }
-        int cmp = key.compareTo(x.key);
-        if (cmp < 0) {
-            value = get(x.left, key);//递归更新子树
-
-        } else if (cmp > 0) {
-            value = get(x.right, key);//递归更新子树
-        } else if (cmp == 0) {
-            value = x.value;
-        }
-        return value;
+    public int getHeight(Node x) {
+        if (x == null)
+            return 0;
+        else            //else要不要
+            return x.height;
     }
-
 
     private void put(Key key, Value value) {
         root = put(root, key, value);//从root节点开始更新树
@@ -56,7 +44,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     public Node put(Node x, Key key, Value value) {
 
         if (x == null) {
-            return new Node(key, value, 1);//1:当前树中只有一个节点，该节点本身
+            return new Node(key, value, 1,1);//1:当前树中只有一个节点，该节点本身
         }
 
         int cmp = key.compareTo(x.key);
@@ -69,10 +57,12 @@ public class BST<Key extends Comparable<Key>, Value> {
             x.value = value;    //更新值
         }
         x.N = size(x.left) + size(x.right) + 1;
+        int leftHeight = getHeight(x.left);
+        int rightHeight = getHeight(x.right);
+        x.height = (leftHeight>=rightHeight?leftHeight:rightHeight)+1;
         return x;
     }
 
-//    private int size(Node x) {
     private int size(Node x) {
         if (x == null)
             return 0;
@@ -101,18 +91,18 @@ public class BST<Key extends Comparable<Key>, Value> {
 
 
     public static void main(String[] args) {
-        BST<Integer, Integer> tree = new BST<Integer, Integer>();
+        GetHeight<Integer, Integer> tree = new GetHeight<Integer, Integer>();
         Integer[] list = {1, 6, 8, 9, 5, 4, 3};
         for (Integer i : list) {
-            tree.put(i, i*i);
+            tree.put(i, i * i);
         }
-        tree.print();
         System.out.println(tree.get(5));
-//        tree.put(9,81);
-        tree.put(7,49);
-
+        tree.put(7, 49);
         tree.print();
+        System.out.println("height="+tree.getHeight());
+
 
 
     }
+
 }
