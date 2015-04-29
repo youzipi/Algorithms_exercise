@@ -48,7 +48,8 @@ public class AVLTree<Key extends Comparable<Key>, Value> extends BST {
         x.right = n.left;
         n.left = x;
 
-        x.height = max(height(x.left), height(x.right))+1;
+//        x.height = max(height(x.left), height(x.right))+1;
+        x.height = height(n);
         n.height = max(height(n.left), height(n.right))+1;
         return n;//x -> x.right.left
     }
@@ -58,7 +59,8 @@ public class AVLTree<Key extends Comparable<Key>, Value> extends BST {
         x.left = n.right;
         n.right = x;
 
-        x.height = max(height(x.left), height(x.right))+1;
+//        x.height = max(height(x.left), height(x.right))+1;
+        x.height = height(n);
         n.height = max(height(n.left), height(n.right))+1;
         return n;
     }
