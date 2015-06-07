@@ -10,31 +10,45 @@ import java.util.Random;
  */
 public class QuickSort extends Sort {
     public static void sort(Comparable[] a) {
-        int left = 0;
-        int right = a.length;
+        sort(a, 0, a.length - 1);
+    }
+
+    public static void sort(Comparable[] a, int left, int right) {
+
         if (right <= left)
             return;
         Random random = new Random();
-        int p = random.nextInt(right);
+        int mid = random.nextInt(right);
+        int r = right;
+        int l = left;
 
-        exch(a, 0, p);
-        int last = left;
-
-        for (int i = left+1; i <= right; i++) {
-            if(less(a[left],a[right])){
-                exch(a,last,i);
-                last++;
+        exch(a, 0, mid);
+        Comparable flag = a[0];
+        l++;
+        while (true) {
+            while (lessorEqual(a[l], flag)) {
+                l++;
+                if (l == right)
+                    break;
             }
+            while (lessorEqual(flag, a[r])) {
+                r--;
+                if (r == 0)
+                    break;
+            }
+            if (l >= r)
+                break;
+            else
+                exch(a, l, r);
         }
-        exch(a,left,right);
-//        sort(a[left:last-1]);
-
-
-
+        exch(a, r, 0);
+        sort(a, 0, l - 1);
+        sort(a, l+1, right);
     }
 
     public static void main(String[] args) {
-        Integer[] a = new Integer[]{1, 4, 5, 6, 2, 5, 3};
+        Integer[] a = new Integer[]{2,6,8,9,3,5,4,7,0};
+        show(a);
         QuickSort.sort(a);
         show(a);
     }

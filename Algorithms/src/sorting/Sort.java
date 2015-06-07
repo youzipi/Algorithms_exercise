@@ -12,6 +12,10 @@ public abstract class Sort {
         return a.compareTo(b) < 0;
     }
 
+    protected static boolean lessorEqual(Comparable a,Comparable b){
+        return a.compareTo(b) <= 0;
+    }
+
     // exchange a[i] and a[j]
     protected static void exch(Object[] a, int i, int j) {
         Object swap = a[i];
@@ -22,7 +26,8 @@ public abstract class Sort {
     // print array to standard output
     protected static void show(Comparable[] a) {
         for (Comparable anA : a) {
-            System.out.println(anA);
+            System.out.print(anA + ",");
         }
+        System.out.println();
     }
 }
