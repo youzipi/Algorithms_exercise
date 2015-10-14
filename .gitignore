@@ -1,8 +1,7 @@
+#IDEA
 .idea
 gen
 out
-
-
 *.iml
 lib
 
