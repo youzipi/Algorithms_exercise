@@ -18,7 +18,7 @@ public class QuickSort extends Sort {
         if (right <= left)
             return;
         Random random = new Random();
-        int mid = random.nextInt(right);
+        int mid = random.nextInt(right);//随机指定初始值
         int r = right;
         int l = left;
 
@@ -26,12 +26,12 @@ public class QuickSort extends Sort {
         Comparable flag = a[0];
         l++;
         while (true) {
-            while (lessorEqual(a[l], flag)) {
+            while (lessorEqual(a[l], flag)) {       //向右寻找比flag大的
                 l++;
                 if (l == right)
                     break;
             }
-            while (lessorEqual(flag, a[r])) {
+            while (lessorEqual(flag, a[r])) {       //向左寻找比flag小的
                 r--;
                 if (r == 0)
                     break;
@@ -39,7 +39,7 @@ public class QuickSort extends Sort {
             if (l >= r)
                 break;
             else
-                exch(a, l, r);
+                exch(a, l, r);  //交换a[l],a[r]
         }
         exch(a, r, 0);
         sort(a, 0, l - 1);
