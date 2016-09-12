@@ -29,10 +29,10 @@ def quick_sort2(a, low, high):
                 break
         if left < right:
             a[left], a[right] = a[right], a[left]
-            print a
+            print(a)
         else:
             break
-    print a
+    print(a)
     a[low], a[right] = a[right], a[low]
     quick_sort2(a, low, right - 1)
     quick_sort2(a, right + 1, high)
@@ -40,4 +40,4 @@ def quick_sort2(a, low, high):
 
 
 a = [2, 8, 9, 4, 5, 6, 7, 1, 0, 3, ]
-print quick_sort(a)
+print(quick_sort(a))
