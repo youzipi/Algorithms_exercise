@@ -7,3 +7,5 @@ lib
 
 #git
 sd
+.benchmarks
+.cache
