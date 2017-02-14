@@ -23,7 +23,7 @@ class Solution(object):
         rows = numRows
         size = 2*numRows-2
         s = [s[i*size:i*size+size] for i in range(int((len(s)-1)/size+1))]
-        print s
+        print(s)
         result = ''
         for index in range(rows): 
             for g_index in range(len(s)):
@@ -33,4 +33,4 @@ class Solution(object):
         return result
         
 s = Solution()
-print s.convert('ABC',2)
+print(s.convert('ABC',2))
