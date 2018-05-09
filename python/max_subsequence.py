@@ -8,7 +8,6 @@ empty_list = []
 
 
 def find_max_sub(seq=empty_list):
-    max_sub = []
     max_sum = 0
     max_start = 0
     max_end = 0
@@ -16,7 +15,6 @@ def find_max_sub(seq=empty_list):
     max_suffix_sum = 0
     max_suffix_start = 0
     max_suffix_end = 0
-    i = 0
 
     for index, item in enumerate(seq):
         next_max_suffix_sum = max_suffix_sum + item
