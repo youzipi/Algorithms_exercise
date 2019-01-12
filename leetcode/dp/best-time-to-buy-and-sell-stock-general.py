@@ -47,6 +47,8 @@ class Solution:
         """
         """
         无限次买卖
+        
+        todo 无限次买卖，但限制最大持股数
         """
         length = len(prices)
         if length <= 1:
@@ -70,14 +72,16 @@ class Solution:
         """
         第几天：i = 0 -> length-1
         已购买次数： j = 0 -> k
+        持有股数： h = 0 -> max_hold
         
         隐含条件： 
-        - k <= length
-        - j <= i
+        - max_hold <= k <= length
+        - h <= j <= i
         相等的情况是，每天都买，只买不卖，此时 h = j = i
         
         推导出条件
         - j <= min(i,k)
+        - h <= min(j,max_hold)
         
         条件外的情况不会发生，不需要考虑
         
@@ -94,13 +98,14 @@ class Solution:
 
         max_hold = 1
         _k = min(k, length)
+        _max_hold = min(max_hold, k)
 
-        print(length, _k)
+        print(length, _k, _max_hold)
 
         # r 标识
         # r = [[[0 for h in range(max_hold + 1)] for j in range(k + 1)] for i in range(length)]
         # r = [[[0 for h in range(_max_hold + 1)] for j in range(_k + 1)] for i in range(length)]
-        r = [[[0, 0] for j in range(min(i + 1, _k) + 1)] for i in range(length)]
+        r = [[[0 for h in range(min(j, _max_hold) + 1)] for j in range(min(i + 1, _k) + 1)] for i in range(length)]
 
         # 初始化第一天数据
         r[0][1][1] = -prices[0]
@@ -122,8 +127,11 @@ class Solution:
             # 第 i 天，购买次数 j <= min(i,k)
             j_max = min(i + 1, _k)
             for j in range(j_max + 1):
-                for h in (0, 1):
+                # 购买 j 次 的情况下， h <= min(j,max_hold)
+                h_max = min(j, _max_hold)
+                for h in range(h_max + 1):
                     print(i, j, h)
+
                     # 参与比较 的 r
                     r_list = []
 
@@ -140,6 +148,15 @@ class Solution:
                         r[i][j][h] = False
                     else:
                         r[i][j][h] = max(r_list)
+
+                    # r[i][j][h] = max(
+                    #     # r[i - 1][j][h],  # hold
+                    #     # r[i - 1][j - 1][h - 1] - prices[i],  # buy
+                    #     # r[i - 1][j - 1][h + 1] + prices[i],  # sell
+                    #     safe(r, i - 1, j, h) and r[i - 1][j][h] or 0,  # hold
+                    #     safe(r, i - 1, j - 1, h - 1) and (r[i - 1][j - 1][h - 1] - prices[i]) or 0,  # buy
+                    #     safe(r, i - 1, j - 1, h + 1) and (r[i - 1][j - 1][h + 1] + prices[i]) or 0,  # sell
+                    # )
         for i in r:
             print(i)
         return max((max(max(r[i][j]) for j in range(min(i + 1, _k) + 1)) for i in range(length)))
@@ -151,7 +168,7 @@ if __name__ == '__main__':
     # result = s.maxProfit(2, [2, 4, 1])
     # result = s.maxProfit(0, [1, 3])
     prices = [random.randint(0, 1000) for i in range(10000)]
-    result = s.maxProfit(2, [1, 2, 4])
-    # result = s.maxProfit(1000000000, prices)
+    # result = s.maxProfit(2, [1, 2, 4])
+    result = s.maxProfit(1000000000, prices)
     # result = s.maxProfit([7,6,4,3,1])
     print(result)
