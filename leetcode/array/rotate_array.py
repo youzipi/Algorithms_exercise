@@ -30,7 +30,8 @@ class Solution:
         :type k: int
         :rtype: void Do not return anything, modify nums in-place instead.
         """
-        nums = nums[(k + 1):] + nums[:k]
+        nums = nums[-k:] + nums[:(k + 1)]
+        print(nums)
 
 
 if __name__ == '__main__':
